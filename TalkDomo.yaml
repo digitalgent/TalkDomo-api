@@ -1,0 +1,566 @@
+swagger: '2.0'
+info:
+  description: Talk.Domo interactions
+  version: 1.0.0
+  title: Talk.Domo
+  termsOfService: GUA.md
+  contact:
+    email: gent@digitalent.cc
+host: api.projectname.digitalent.cc
+basePath: /v1
+tags:
+  - name: users
+    description: Make account to use Talk.Domo
+  - name: domo
+    description: Operations about Domo
+  - name: apps
+    description: Apps on Domo
+schemes:
+  - http
+paths:
+  /users:
+    post:
+      tags:
+        - users
+      summary: Add a new user
+      description: 'Make a new account(username, name, face, password)'
+      operationId: addUser
+      parameters:
+        - in: body
+          name: body
+          description: Add new account to access Domo
+          schema:
+            $ref: '#/definitions/Name'
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Name'
+        '405':
+          description: Invalid input
+  '/users/{username}':
+    get:
+      tags:
+        - users
+      summary: Find user by username
+      description: Returns a single username
+      operationId: getUserByUsername
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: username
+          in: path
+          description: Username of user to return
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Name'
+        '400':
+          description: Invalid Username supplied
+        '404':
+          description: User not found
+    put:
+      tags:
+        - users
+      summary: Update an existing user
+      description: Edit an existing account
+      operationId: updateUser
+      consumes:
+        - application/json
+        - application/xml
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: User that needs to be edited
+          schema:
+            $ref: '#/definitions/Name'
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Name'
+        '400':
+          description: Invalid username supplied
+        '404':
+          description: User not found
+        '405':
+          description: Validation exception
+    delete:
+      tags:
+        - users
+      summary: Delete a user
+      description: Deletes a user
+      operationId: deleteUser
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: api_key
+          in: header
+          type: string
+        - name: username
+          in: path
+          description: Username to delete
+          required: true
+          type: string
+      responses:
+        '400':
+          description: Invalid username supplied
+        '404':
+          description: User not found
+  '/domo/{id}':
+    get:
+      tags:
+        - domo
+      summary: Find Domo by ID
+      description: Returns a single Domo
+      operationId: getDomoById
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: ID of domo to return
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Name'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Domo not found
+  '/domo/{id}/users':
+    get:
+      tags:
+        - domo
+      summary: User list
+      description: Returns all users
+      operationId: getAllUsers
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: ID of Domo
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Name'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Users not found
+  '/domo/{id}/mic':
+    post:
+      tags:
+        - domo
+      summary: STT
+      description: Domo interprets incoming voice command
+      operationId: addVoiceCommand
+      parameters:
+        - in: path
+          name: id
+          description: Add new voice command
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Name'
+        '405':
+          description: Invalid input
+  '/domo/{id}/apps':
+    get:
+      tags:
+        - apps
+      summary: Find all apps on Domo
+      description: Returns all apps
+      operationId: getAllApps
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: ID of Domo
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Name'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Domo not found
+  '/domo/{id}/apps/weather':
+    get:
+      tags:
+        - apps
+      summary: Weather Forecast
+      description: weather forecast and advice for how to dress
+      operationId: getWeather
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: ID of Domo
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Name'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Domo not found
+  '/domo/{id}/apps/lights':
+    get:
+      tags:
+        - apps
+      summary: Lights list
+      description: Returns all lights
+      operationId: getAllLigths
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: ID of Domo
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Name'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Domo not found
+    post:
+      tags:
+        - apps
+      summary: Add a new light
+      description: Add a new light to be remote controlled
+      operationId: addLight
+      parameters:
+        - in: body
+          name: body
+          description: Add new Light
+          schema:
+            $ref: '#/definitions/Name'
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Name'
+        '405':
+          description: Invalid input
+  '/apps/lights/{id}':
+    get:
+      tags:
+        - apps
+      summary: Find light by ID
+      description: Returns a single light
+      operationId: getLightById
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: ID of Light
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Name'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Light not found
+    put:
+      tags:
+        - apps
+      summary: Update an existing light
+      description: Edit an existing light
+      operationId: updateLight
+      consumes:
+        - application/json
+        - application/xml
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Light that needs to be edited
+          schema:
+            $ref: '#/definitions/Name'
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Name'
+        '400':
+          description: Invalid light id supplied
+        '404':
+          description: Light not found
+        '405':
+          description: Validation exception
+    delete:
+      tags:
+        - apps
+      summary: Delete a light
+      description: ''
+      operationId: deleteLight
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: api_key
+          in: header
+          required: false
+          type: string
+        - name: id
+          in: path
+          description: Light id to delete
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Light not found
+  '/domo/{id}/apps/alarms':
+    get:
+      tags:
+        - apps
+      summary: Alarms list
+      description: Returns all alarms
+      operationId: getAllAlarms
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: ID of Domo
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Name'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Domo not found
+    post:
+      tags:
+        - apps
+      summary: Add a new Alarm
+      description: Add a new alarm
+      operationId: addAlarm
+      parameters:
+        - in: body
+          name: body
+          description: Add new Alarm
+          schema:
+            $ref: '#/definitions/Name'
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Name'
+        '405':
+          description: Invalid input
+  '/apps/alarms/{id}':
+    get:
+      tags:
+        - apps
+      summary: Find alarm by ID
+      description: Returns a single alarm
+      operationId: getAlarmById
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: ID of Alarm
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Name'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Alarm not found
+    put:
+      tags:
+        - apps
+      summary: Update an existing alarm
+      description: Edit an existing alarm
+      operationId: updateAlarm
+      consumes:
+        - application/json
+        - application/xml
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Alarm that needs to be edited
+          schema:
+            $ref: '#/definitions/Name'
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Name'
+        '400':
+          description: Invalid alarm id supplied
+        '404':
+          description: Alarm not found
+        '405':
+          description: Validation exception
+    delete:
+      tags:
+        - apps
+      summary: Delete a alarm
+      description: ''
+      operationId: deleteAlarm
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: api_key
+          in: header
+          required: false
+          type: string
+        - name: id
+          in: path
+          description: Alarm id to delete
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Alarm not found
+  '/domo/{id}/apps/security/users':
+    get:
+      tags:
+        - apps
+      summary: Users list with access to security
+      description: Returns all authorized users
+      operationId: getAuthorizedUsers
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: ID of Domo
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Name'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Domo not found
+  '/apps/security/users/{username}':
+    post:
+      tags:
+        - apps
+      summary: Add a new authorized user
+      description: Add a new authorized user
+      operationId: addAuthorizedUser
+      parameters:
+        - in: path
+          name: username
+          description: authorized username
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Name'
+        '405':
+          description: Invalid input
+    delete:
+      tags:
+        - apps
+      summary: Delete an authorized user
+      description: ''
+      operationId: deleteAuthorizedUser
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: api_key
+          in: header
+          required: false
+          type: string
+        - name: username
+          in: path
+          description: Username to delete
+          required: true
+          type: string
+      responses:
+        '400':
+          description: Invalid username supplied
+        '404':
+          description: User not found
+definitions:
+  Name:
+    type: string
+    example: Frank
