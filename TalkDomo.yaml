@@ -76,11 +76,11 @@ paths:
         - application/xml
         - application/json
       parameters:
-        - in: body
-          name: body
+        - in: path
+          name: username
           description: User that needs to be edited
-          schema:
-            $ref: '#/definitions/User'
+          required: true
+          type: string
       responses:
         '200':
           description: successful operation
@@ -271,11 +271,12 @@ paths:
       description: Add a new light to be remote controlled
       operationId: addLight
       parameters:
-        - in: body
-          name: body
+        - in: path
+          name: id
           description: Add new Light
-          schema:
-            $ref: '#/definitions/Apps'
+          required: true
+          type: integer
+          format: int64
       responses:
         '200':
           description: successful operation
@@ -322,11 +323,12 @@ paths:
         - application/xml
         - application/json
       parameters:
-        - in: body
-          name: body
+        - in: path
+          name: id
           description: Light that needs to be edited
-          schema:
-            $ref: '#/definitions/Apps'
+          required: true
+          type: integer
+          format: int64
       responses:
         '200':
           description: successful operation
@@ -396,11 +398,12 @@ paths:
       description: Add a new alarm
       operationId: addAlarm
       parameters:
-        - in: body
-          name: body
+        - in: path
+          name: id
           description: Add new Alarm
-          schema:
-            $ref: '#/definitions/Apps'
+          required: true
+          type: integer
+          format: int64
       responses:
         '200':
           description: successful operation
@@ -447,11 +450,12 @@ paths:
         - application/xml
         - application/json
       parameters:
-        - in: body
-          name: body
+        - in: path
+          name: id
           description: Alarm that needs to be edited
-          schema:
-            $ref: '#/definitions/Apps'
+          required: true
+          type: integer
+          format: int64
       responses:
         '200':
           description: successful operation
