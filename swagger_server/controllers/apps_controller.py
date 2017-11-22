@@ -7,17 +7,15 @@ from six import iteritems
 from ..util import deserialize_date, deserialize_datetime
 
 
-def add_alarm(body=None):
+def add_alarm(id):
     """
     Add a new Alarm
     Add a new alarm
-    :param body: Add new Alarm
-    :type body: dict | bytes
+    :param id: Add new Alarm
+    :type id: int
 
     :rtype: Apps
     """
-    if connexion.request.is_json:
-        body = Apps.from_dict(connexion.request.get_json())
     return 'do some magic!'
 
 
@@ -33,17 +31,15 @@ def add_authorized_user(username):
     return 'do some magic!'
 
 
-def add_light(body=None):
+def add_light(id):
     """
     Add a new light
     Add a new light to be remote controlled
-    :param body: Add new Light
-    :type body: dict | bytes
+    :param id: Add new Light
+    :type id: int
 
     :rtype: Apps
     """
-    if connexion.request.is_json:
-        body = Apps.from_dict(connexion.request.get_json())
     return 'do some magic!'
 
 
@@ -173,29 +169,25 @@ def get_weather(id):
     return 'do some magic!'
 
 
-def update_alarm(body=None):
+def update_alarm(id):
     """
     Update an existing alarm
     Edit an existing alarm
-    :param body: Alarm that needs to be edited
-    :type body: dict | bytes
+    :param id: Alarm that needs to be edited
+    :type id: int
 
     :rtype: Apps
     """
-    if connexion.request.is_json:
-        body = Apps.from_dict(connexion.request.get_json())
     return 'do some magic!'
 
 
-def update_light(body=None):
+def update_light(id):
     """
     Update an existing light
     Edit an existing light
-    :param body: Light that needs to be edited
-    :type body: dict | bytes
+    :param id: Light that needs to be edited
+    :type id: int
 
     :rtype: Apps
     """
-    if connexion.request.is_json:
-        body = Apps.from_dict(connexion.request.get_json())
     return 'do some magic!'

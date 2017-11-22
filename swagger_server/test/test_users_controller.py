@@ -52,10 +52,8 @@ class TestUsersController(BaseTestCase):
 
         Update an existing user
         """
-        body = User()
-        response = self.client.open('/v1/users/{username}',
+        response = self.client.open('/v1/users/{username}'.format(username='username_example'),
                                     method='PUT',
-                                    data=json.dumps(body),
                                     content_type='application/json')
         self.assert200(response, "Response body is : " + response.data.decode('utf-8'))
 

@@ -80,12 +80,11 @@ paths:
       - "application/xml"
       - "application/json"
       parameters:
-      - in: "body"
-        name: "body"
+      - name: "username"
+        in: "path"
         description: "User that needs to be edited"
-        required: false
-        schema:
-          $ref: "#/definitions/User"
+        required: true
+        type: "string"
       responses:
         200:
           description: "successful operation"
@@ -285,12 +284,12 @@ paths:
       description: "Add a new light to be remote controlled"
       operationId: "add_light"
       parameters:
-      - in: "body"
-        name: "body"
+      - name: "id"
+        in: "path"
         description: "Add new Light"
-        required: false
-        schema:
-          $ref: "#/definitions/Apps"
+        required: true
+        type: "integer"
+        format: "int64"
       responses:
         200:
           description: "successful operation"
@@ -339,12 +338,12 @@ paths:
       - "application/xml"
       - "application/json"
       parameters:
-      - in: "body"
-        name: "body"
+      - name: "id"
+        in: "path"
         description: "Light that needs to be edited"
-        required: false
-        schema:
-          $ref: "#/definitions/Apps"
+        required: true
+        type: "integer"
+        format: "int64"
       responses:
         200:
           description: "successful operation"
@@ -417,12 +416,12 @@ paths:
       description: "Add a new alarm"
       operationId: "add_alarm"
       parameters:
-      - in: "body"
-        name: "body"
+      - name: "id"
+        in: "path"
         description: "Add new Alarm"
-        required: false
-        schema:
-          $ref: "#/definitions/Apps"
+        required: true
+        type: "integer"
+        format: "int64"
       responses:
         200:
           description: "successful operation"
@@ -471,12 +470,12 @@ paths:
       - "application/xml"
       - "application/json"
       parameters:
-      - in: "body"
-        name: "body"
+      - name: "id"
+        in: "path"
         description: "Alarm that needs to be edited"
-        required: false
-        schema:
-          $ref: "#/definitions/Apps"
+        required: true
+        type: "integer"
+        format: "int64"
       responses:
         200:
           description: "successful operation"

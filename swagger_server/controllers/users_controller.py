@@ -46,15 +46,13 @@ def get_user_by_username(username):
     return 'do some magic!'
 
 
-def update_user(body=None):
+def update_user(username):
     """
     Update an existing user
     Edit an existing account
-    :param body: User that needs to be edited
-    :type body: dict | bytes
+    :param username: User that needs to be edited
+    :type username: str
 
     :rtype: User
     """
-    if connexion.request.is_json:
-        body = User.from_dict(connexion.request.get_json())
     return 'do some magic!'

@@ -18,11 +18,8 @@ class TestAppsController(BaseTestCase):
 
         Add a new Alarm
         """
-        body = Apps()
-        response = self.client.open('/v1/apps/{id}/alarms',
-                                    method='POST',
-                                    data=json.dumps(body),
-                                    content_type='application/json')
+        response = self.client.open('/v1/apps/{id}/alarms'.format(id=789),
+                                    method='POST')
         self.assert200(response, "Response body is : " + response.data.decode('utf-8'))
 
     def test_add_authorized_user(self):
@@ -41,11 +38,8 @@ class TestAppsController(BaseTestCase):
 
         Add a new light
         """
-        body = Apps()
-        response = self.client.open('/v1/apps/{id}/lights',
-                                    method='POST',
-                                    data=json.dumps(body),
-                                    content_type='application/json')
+        response = self.client.open('/v1/apps/{id}/lights'.format(id=789),
+                                    method='POST')
         self.assert200(response, "Response body is : " + response.data.decode('utf-8'))
 
     def test_delete_alarm(self):
@@ -160,10 +154,8 @@ class TestAppsController(BaseTestCase):
 
         Update an existing alarm
         """
-        body = Apps()
-        response = self.client.open('/v1/apps/alarms/{id}',
+        response = self.client.open('/v1/apps/alarms/{id}'.format(id=789),
                                     method='PUT',
-                                    data=json.dumps(body),
                                     content_type='application/json')
         self.assert200(response, "Response body is : " + response.data.decode('utf-8'))
 
@@ -173,10 +165,8 @@ class TestAppsController(BaseTestCase):
 
         Update an existing light
         """
-        body = Apps()
-        response = self.client.open('/v1/apps/lights/{id}',
+        response = self.client.open('/v1/apps/lights/{id}'.format(id=789),
                                     method='PUT',
-                                    data=json.dumps(body),
                                     content_type='application/json')
         self.assert200(response, "Response body is : " + response.data.decode('utf-8'))
 
