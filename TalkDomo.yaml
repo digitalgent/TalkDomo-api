@@ -30,12 +30,12 @@ paths:
           name: body
           description: Add new account to access Domo
           schema:
-            $ref: '#/definitions/Name'
+            $ref: '#/definitions/User'
       responses:
         '200':
           description: successful operation
           schema:
-            $ref: '#/definitions/Name'
+            $ref: '#/definitions/User'
         '405':
           description: Invalid input
   '/users/{username}':
@@ -58,7 +58,7 @@ paths:
         '200':
           description: successful operation
           schema:
-            $ref: '#/definitions/Name'
+            $ref: '#/definitions/User'
         '400':
           description: Invalid Username supplied
         '404':
@@ -80,12 +80,12 @@ paths:
           name: body
           description: User that needs to be edited
           schema:
-            $ref: '#/definitions/Name'
+            $ref: '#/definitions/User'
       responses:
         '200':
           description: successful operation
           schema:
-            $ref: '#/definitions/Name'
+            $ref: '#/definitions/User'
         '400':
           description: Invalid username supplied
         '404':
@@ -136,7 +136,7 @@ paths:
         '200':
           description: successful operation
           schema:
-            $ref: '#/definitions/Name'
+            $ref: '#/definitions/Domo'
         '400':
           description: Invalid ID supplied
         '404':
@@ -162,7 +162,7 @@ paths:
         '200':
           description: successful operation
           schema:
-            $ref: '#/definitions/Name'
+            $ref: '#/definitions/Domo'
         '400':
           description: Invalid ID supplied
         '404':
@@ -184,8 +184,6 @@ paths:
       responses:
         '200':
           description: successful operation
-          schema:
-            $ref: '#/definitions/Name'
         '405':
           description: Invalid input
   '/domo/{id}/apps':
@@ -209,12 +207,12 @@ paths:
         '200':
           description: successful operation
           schema:
-            $ref: '#/definitions/Name'
+            $ref: '#/definitions/Apps'
         '400':
           description: Invalid ID supplied
         '404':
           description: Domo not found
-  '/domo/{id}/apps/weather':
+  '/apps/{id}/weather':
     get:
       tags:
         - apps
@@ -227,7 +225,7 @@ paths:
       parameters:
         - name: id
           in: path
-          description: ID of Domo
+          description: ID of App(weather)
           required: true
           type: integer
           format: int64
@@ -235,12 +233,12 @@ paths:
         '200':
           description: successful operation
           schema:
-            $ref: '#/definitions/Name'
+            $ref: '#/definitions/Apps'
         '400':
           description: Invalid ID supplied
         '404':
-          description: Domo not found
-  '/domo/{id}/apps/lights':
+          description: App not found
+  '/apps/{id}/lights':
     get:
       tags:
         - apps
@@ -253,7 +251,7 @@ paths:
       parameters:
         - name: id
           in: path
-          description: ID of Domo
+          description: ID of Light
           required: true
           type: integer
           format: int64
@@ -261,11 +259,11 @@ paths:
         '200':
           description: successful operation
           schema:
-            $ref: '#/definitions/Name'
+            $ref: '#/definitions/Apps'
         '400':
           description: Invalid ID supplied
         '404':
-          description: Domo not found
+          description: Light not found
     post:
       tags:
         - apps
@@ -277,12 +275,12 @@ paths:
           name: body
           description: Add new Light
           schema:
-            $ref: '#/definitions/Name'
+            $ref: '#/definitions/Apps'
       responses:
         '200':
           description: successful operation
           schema:
-            $ref: '#/definitions/Name'
+            $ref: '#/definitions/Apps'
         '405':
           description: Invalid input
   '/apps/lights/{id}':
@@ -306,7 +304,7 @@ paths:
         '200':
           description: successful operation
           schema:
-            $ref: '#/definitions/Name'
+            $ref: '#/definitions/Apps'
         '400':
           description: Invalid ID supplied
         '404':
@@ -328,12 +326,12 @@ paths:
           name: body
           description: Light that needs to be edited
           schema:
-            $ref: '#/definitions/Name'
+            $ref: '#/definitions/Apps'
       responses:
         '200':
           description: successful operation
           schema:
-            $ref: '#/definitions/Name'
+            $ref: '#/definitions/Apps'
         '400':
           description: Invalid light id supplied
         '404':
@@ -365,7 +363,7 @@ paths:
           description: Invalid ID supplied
         '404':
           description: Light not found
-  '/domo/{id}/apps/alarms':
+  '/apps/{id}/alarms':
     get:
       tags:
         - apps
@@ -386,11 +384,11 @@ paths:
         '200':
           description: successful operation
           schema:
-            $ref: '#/definitions/Name'
+            $ref: '#/definitions/Apps'
         '400':
           description: Invalid ID supplied
         '404':
-          description: Domo not found
+          description: Alarm not found
     post:
       tags:
         - apps
@@ -402,12 +400,12 @@ paths:
           name: body
           description: Add new Alarm
           schema:
-            $ref: '#/definitions/Name'
+            $ref: '#/definitions/Apps'
       responses:
         '200':
           description: successful operation
           schema:
-            $ref: '#/definitions/Name'
+            $ref: '#/definitions/Apps'
         '405':
           description: Invalid input
   '/apps/alarms/{id}':
@@ -431,7 +429,7 @@ paths:
         '200':
           description: successful operation
           schema:
-            $ref: '#/definitions/Name'
+            $ref: '#/definitions/Apps'
         '400':
           description: Invalid ID supplied
         '404':
@@ -453,12 +451,12 @@ paths:
           name: body
           description: Alarm that needs to be edited
           schema:
-            $ref: '#/definitions/Name'
+            $ref: '#/definitions/Apps'
       responses:
         '200':
           description: successful operation
           schema:
-            $ref: '#/definitions/Name'
+            $ref: '#/definitions/Apps'
         '400':
           description: Invalid alarm id supplied
         '404':
@@ -490,7 +488,7 @@ paths:
           description: Invalid ID supplied
         '404':
           description: Alarm not found
-  '/domo/{id}/apps/security/users':
+  '/apps/{id}/security/users':
     get:
       tags:
         - apps
@@ -503,7 +501,7 @@ paths:
       parameters:
         - name: id
           in: path
-          description: ID of Domo
+          description: ID of App
           required: true
           type: integer
           format: int64
@@ -511,11 +509,11 @@ paths:
         '200':
           description: successful operation
           schema:
-            $ref: '#/definitions/Name'
+            $ref: '#/definitions/User'
         '400':
           description: Invalid ID supplied
         '404':
-          description: Domo not found
+          description: App not found
   '/apps/security/users/{username}':
     post:
       tags:
@@ -533,7 +531,7 @@ paths:
         '200':
           description: successful operation
           schema:
-            $ref: '#/definitions/Name'
+            $ref: '#/definitions/User'
         '405':
           description: Invalid input
     delete:
@@ -561,6 +559,97 @@ paths:
         '404':
           description: User not found
 definitions:
-  Name:
-    type: string
-    example: Frank
+  Domo:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: format64
+      name:
+        type: string
+      DateTime:
+        type: string
+        format: date-time
+      Timezone:
+        type: string
+      voice:
+        $ref: '#/definitions/Voice'
+      emotion:
+        type: string
+  Apps:
+    type: object
+    properties:
+      weather:
+        $ref: '#/definitions/Weather'
+      lights:
+        $ref: '#/definitions/Light'
+      alarms:
+        $ref: '#/definitions/Alarm'
+      security:
+        type: boolean
+        default: 'false'
+  User:
+    type: object
+    properties:
+      username:
+        type: string
+      firstName:
+        type: string
+      lastName:
+        type: string
+      email:
+        type: string
+      password:
+        type: string
+      face:
+        type: string
+  Weather:
+    type: object
+    properties:
+      temp:
+        type: integer
+        format: int64
+        example: degrees/fahrenheit
+      forecast:
+        type: string
+        example: Cloudy with a chance of meatballs.
+      advice:
+        type: string
+        example: You might want to bring along an umbrella.
+  Light:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+      name:
+        type: string
+      status:
+        type: boolean
+        default: 'false'
+  Alarm:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+      time:
+        type: integer
+        format: '00:00'
+      goodmorning:
+        type: string
+        description: Goodmorning message
+  Voice:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+      name:
+        type: string
+      gender:
+        type: string
+        example: male
+      age:
+        type: integer
+        format: int64
