@@ -1,0 +1,685 @@
+---
+swagger: "2.0"
+info:
+  description: "Talk.Domo interactions"
+  version: "1.0.0"
+  title: "Talk.Domo"
+  termsOfService: "GUA.md"
+  contact:
+    email: "gent@digitalent.cc"
+host: "api.projectname.digitalent.cc"
+basePath: "/v1"
+tags:
+- name: "users"
+  description: "Make account to use Talk.Domo"
+- name: "domo"
+  description: "Operations about Domo"
+- name: "apps"
+  description: "Apps on Domo"
+schemes:
+- "http"
+paths:
+  /users:
+    post:
+      tags:
+      - "users"
+      summary: "Add a new user"
+      description: "Make a new account(username, name, face, password)"
+      operationId: "add_user"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Add new account to access Domo"
+        required: false
+        schema:
+          $ref: "#/definitions/User"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/User"
+        405:
+          description: "Invalid input"
+      x-swagger-router-controller: "swagger_server.controllers.users_controller"
+  /users/{username}:
+    get:
+      tags:
+      - "users"
+      summary: "Find user by username"
+      description: "Returns a single username"
+      operationId: "get_user_by_username"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "username"
+        in: "path"
+        description: "Username of user to return"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/User"
+        400:
+          description: "Invalid Username supplied"
+        404:
+          description: "User not found"
+      x-swagger-router-controller: "swagger_server.controllers.users_controller"
+    put:
+      tags:
+      - "users"
+      summary: "Update an existing user"
+      description: "Edit an existing account"
+      operationId: "update_user"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "User that needs to be edited"
+        required: false
+        schema:
+          $ref: "#/definitions/User"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/User"
+        400:
+          description: "Invalid username supplied"
+        404:
+          description: "User not found"
+        405:
+          description: "Validation exception"
+      x-swagger-router-controller: "swagger_server.controllers.users_controller"
+    delete:
+      tags:
+      - "users"
+      summary: "Delete a user"
+      description: "Deletes a user"
+      operationId: "delete_user"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "api_key"
+        in: "header"
+        required: false
+        type: "string"
+      - name: "username"
+        in: "path"
+        description: "Username to delete"
+        required: true
+        type: "string"
+      responses:
+        400:
+          description: "Invalid username supplied"
+        404:
+          description: "User not found"
+      x-swagger-router-controller: "swagger_server.controllers.users_controller"
+  /domo/{id}:
+    get:
+      tags:
+      - "domo"
+      summary: "Find Domo by ID"
+      description: "Returns a single Domo"
+      operationId: "get_domo_by_id"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID of domo to return"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Domo"
+        400:
+          description: "Invalid ID supplied"
+        404:
+          description: "Domo not found"
+      x-swagger-router-controller: "swagger_server.controllers.domo_controller"
+  /domo/{id}/users:
+    get:
+      tags:
+      - "domo"
+      summary: "User list"
+      description: "Returns all users"
+      operationId: "get_all_users"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID of Domo"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Domo"
+        400:
+          description: "Invalid ID supplied"
+        404:
+          description: "Users not found"
+      x-swagger-router-controller: "swagger_server.controllers.domo_controller"
+  /domo/{id}/mic:
+    post:
+      tags:
+      - "domo"
+      summary: "STT"
+      description: "Domo interprets incoming voice command"
+      operationId: "add_voice_command"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "Add new voice command"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        200:
+          description: "successful operation"
+        405:
+          description: "Invalid input"
+      x-swagger-router-controller: "swagger_server.controllers.domo_controller"
+  /domo/{id}/apps:
+    get:
+      tags:
+      - "apps"
+      summary: "Find all apps on Domo"
+      description: "Returns all apps"
+      operationId: "get_all_apps"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID of Domo"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Apps"
+        400:
+          description: "Invalid ID supplied"
+        404:
+          description: "Domo not found"
+      x-swagger-router-controller: "swagger_server.controllers.apps_controller"
+  /apps/{id}/weather:
+    get:
+      tags:
+      - "apps"
+      summary: "Weather Forecast"
+      description: "weather forecast and advice for how to dress"
+      operationId: "get_weather"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID of App(weather)"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Apps"
+        400:
+          description: "Invalid ID supplied"
+        404:
+          description: "App not found"
+      x-swagger-router-controller: "swagger_server.controllers.apps_controller"
+  /apps/{id}/lights:
+    get:
+      tags:
+      - "apps"
+      summary: "Lights list"
+      description: "Returns all lights"
+      operationId: "get_all_ligths"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID of Light"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Apps"
+        400:
+          description: "Invalid ID supplied"
+        404:
+          description: "Light not found"
+      x-swagger-router-controller: "swagger_server.controllers.apps_controller"
+    post:
+      tags:
+      - "apps"
+      summary: "Add a new light"
+      description: "Add a new light to be remote controlled"
+      operationId: "add_light"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Add new Light"
+        required: false
+        schema:
+          $ref: "#/definitions/Apps"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Apps"
+        405:
+          description: "Invalid input"
+      x-swagger-router-controller: "swagger_server.controllers.apps_controller"
+  /apps/lights/{id}:
+    get:
+      tags:
+      - "apps"
+      summary: "Find light by ID"
+      description: "Returns a single light"
+      operationId: "get_light_by_id"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID of Light"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Apps"
+        400:
+          description: "Invalid ID supplied"
+        404:
+          description: "Light not found"
+      x-swagger-router-controller: "swagger_server.controllers.apps_controller"
+    put:
+      tags:
+      - "apps"
+      summary: "Update an existing light"
+      description: "Edit an existing light"
+      operationId: "update_light"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Light that needs to be edited"
+        required: false
+        schema:
+          $ref: "#/definitions/Apps"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Apps"
+        400:
+          description: "Invalid light id supplied"
+        404:
+          description: "Light not found"
+        405:
+          description: "Validation exception"
+      x-swagger-router-controller: "swagger_server.controllers.apps_controller"
+    delete:
+      tags:
+      - "apps"
+      summary: "Delete a light"
+      description: ""
+      operationId: "delete_light"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "api_key"
+        in: "header"
+        required: false
+        type: "string"
+      - name: "id"
+        in: "path"
+        description: "Light id to delete"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        400:
+          description: "Invalid ID supplied"
+        404:
+          description: "Light not found"
+      x-swagger-router-controller: "swagger_server.controllers.apps_controller"
+  /apps/{id}/alarms:
+    get:
+      tags:
+      - "apps"
+      summary: "Alarms list"
+      description: "Returns all alarms"
+      operationId: "get_all_alarms"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID of Domo"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Apps"
+        400:
+          description: "Invalid ID supplied"
+        404:
+          description: "Alarm not found"
+      x-swagger-router-controller: "swagger_server.controllers.apps_controller"
+    post:
+      tags:
+      - "apps"
+      summary: "Add a new Alarm"
+      description: "Add a new alarm"
+      operationId: "add_alarm"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Add new Alarm"
+        required: false
+        schema:
+          $ref: "#/definitions/Apps"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Apps"
+        405:
+          description: "Invalid input"
+      x-swagger-router-controller: "swagger_server.controllers.apps_controller"
+  /apps/alarms/{id}:
+    get:
+      tags:
+      - "apps"
+      summary: "Find alarm by ID"
+      description: "Returns a single alarm"
+      operationId: "get_alarm_by_id"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID of Alarm"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Apps"
+        400:
+          description: "Invalid ID supplied"
+        404:
+          description: "Alarm not found"
+      x-swagger-router-controller: "swagger_server.controllers.apps_controller"
+    put:
+      tags:
+      - "apps"
+      summary: "Update an existing alarm"
+      description: "Edit an existing alarm"
+      operationId: "update_alarm"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Alarm that needs to be edited"
+        required: false
+        schema:
+          $ref: "#/definitions/Apps"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Apps"
+        400:
+          description: "Invalid alarm id supplied"
+        404:
+          description: "Alarm not found"
+        405:
+          description: "Validation exception"
+      x-swagger-router-controller: "swagger_server.controllers.apps_controller"
+    delete:
+      tags:
+      - "apps"
+      summary: "Delete a alarm"
+      description: ""
+      operationId: "delete_alarm"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "api_key"
+        in: "header"
+        required: false
+        type: "string"
+      - name: "id"
+        in: "path"
+        description: "Alarm id to delete"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        400:
+          description: "Invalid ID supplied"
+        404:
+          description: "Alarm not found"
+      x-swagger-router-controller: "swagger_server.controllers.apps_controller"
+  /apps/{id}/security/users:
+    get:
+      tags:
+      - "apps"
+      summary: "Users list with access to security"
+      description: "Returns all authorized users"
+      operationId: "get_authorized_users"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID of App"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/User"
+        400:
+          description: "Invalid ID supplied"
+        404:
+          description: "App not found"
+      x-swagger-router-controller: "swagger_server.controllers.apps_controller"
+  /apps/security/users/{username}:
+    post:
+      tags:
+      - "apps"
+      summary: "Add a new authorized user"
+      description: "Add a new authorized user"
+      operationId: "add_authorized_user"
+      parameters:
+      - name: "username"
+        in: "path"
+        description: "authorized username"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/User"
+        405:
+          description: "Invalid input"
+      x-swagger-router-controller: "swagger_server.controllers.apps_controller"
+    delete:
+      tags:
+      - "apps"
+      summary: "Delete an authorized user"
+      description: ""
+      operationId: "delete_authorized_user"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "api_key"
+        in: "header"
+        required: false
+        type: "string"
+      - name: "username"
+        in: "path"
+        description: "Username to delete"
+        required: true
+        type: "string"
+      responses:
+        400:
+          description: "Invalid username supplied"
+        404:
+          description: "User not found"
+      x-swagger-router-controller: "swagger_server.controllers.apps_controller"
+definitions:
+  Domo:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "format64"
+      name:
+        type: "string"
+      DateTime:
+        type: "string"
+        format: "date-time"
+      Timezone:
+        type: "string"
+      voice:
+        $ref: "#/definitions/Voice"
+      emotion:
+        type: "string"
+  Apps:
+    type: "object"
+    properties:
+      weather:
+        $ref: "#/definitions/Weather"
+      lights:
+        $ref: "#/definitions/Light"
+      alarms:
+        $ref: "#/definitions/Alarm"
+      security:
+        type: "boolean"
+        default: false
+  User:
+    type: "object"
+    properties:
+      username:
+        type: "string"
+      firstName:
+        type: "string"
+      lastName:
+        type: "string"
+      email:
+        type: "string"
+      password:
+        type: "string"
+      face:
+        type: "string"
+  Weather:
+    type: "object"
+    properties:
+      temp:
+        type: "integer"
+        format: "int64"
+        example: "degrees/fahrenheit"
+      forecast:
+        type: "string"
+        example: "Cloudy with a chance of meatballs."
+      advice:
+        type: "string"
+        example: "You might want to bring along an umbrella."
+  Light:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      name:
+        type: "string"
+      status:
+        type: "boolean"
+        default: false
+  Alarm:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      time:
+        type: "integer"
+        format: "00:00"
+      goodmorning:
+        type: "string"
+        description: "Goodmorning message"
+  Voice:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      name:
+        type: "string"
+      gender:
+        type: "string"
+        example: "male"
+      age:
+        type: "integer"
+        format: "int64"
