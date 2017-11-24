@@ -18,6 +18,8 @@ pip3 install -r requirements.txt
 python3 -m swagger_server
 ```
 
+Set up your local environment settings by copying `.env.example` to `.env` and fill in the placeholders. 
+
 and open your browser to here:
 
 ```
