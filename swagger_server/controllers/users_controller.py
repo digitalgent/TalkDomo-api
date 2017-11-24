@@ -17,7 +17,7 @@ def add_user(body=None):
     """
     if connexion.request.is_json:
         body = User.from_dict(connexion.request.get_json())
-    return 'do some magic!'
+    return 'do some magic...?'
 
 
 def delete_user(username, api_key=None):
@@ -26,7 +26,7 @@ def delete_user(username, api_key=None):
     Deletes a user
     :param username: Username to delete
     :type username: str
-    :param api_key: 
+    :param api_key:
     :type api_key: str
 
     :rtype: None
