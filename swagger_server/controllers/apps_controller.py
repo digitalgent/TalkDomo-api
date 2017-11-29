@@ -1,10 +1,14 @@
 import connexion
+from flask import jsonify
 from swagger_server.models.apps import Apps
 from swagger_server.models.user import User
 from datetime import date, datetime
 from typing import List, Dict
 from six import iteritems
 from ..util import deserialize_date, deserialize_datetime
+
+from swagger_server.__init__ import db
+from swagger_server.models.apps import Apps
 
 
 def add_alarm(id):
@@ -16,7 +20,16 @@ def add_alarm(id):
 
     :rtype: Apps
     """
-    return 'do some magic!'
+    params = connexion.request.get_json()
+
+    alarm = Alarm(
+        id=params['id'],
+    )
+
+    db.add(alarm)
+    db.commit()
+
+    return jsonify(alarm)
 
 
 def add_authorized_user(username):
@@ -28,7 +41,16 @@ def add_authorized_user(username):
 
     :rtype: User
     """
-    return 'do some magic!'
+    params = connexion.request.get_json()
+
+    user = User(
+        username=params['username'],
+    )
+
+    db.add(user)
+    db.commit()
+
+    return jsonify(user)
 
 
 def add_light(id):
@@ -40,49 +62,64 @@ def add_light(id):
 
     :rtype: Apps
     """
-    return 'do some magic!'
+    params = connexion.request.get_json()
+
+    light = Light(
+        id=params['id'],
+    )
+
+    db.add(light)
+    db.commit()
+
+    return jsonify(light)
 
 
 def delete_alarm(id, api_key=None):
     """
     Delete a alarm
-    
+
     :param id: Alarm id to delete
     :type id: int
-    :param api_key: 
+    :param api_key:
     :type api_key: str
 
     :rtype: None
     """
-    return 'do some magic!'
+    user = db.query(Alarm).filter_by(id=id).first()
+
+    delete(synchronize_session=False)
 
 
 def delete_authorized_user(username, api_key=None):
     """
     Delete an authorized user
-    
+
     :param username: Username to delete
     :type username: str
-    :param api_key: 
+    :param api_key:
     :type api_key: str
 
     :rtype: None
     """
-    return 'do some magic!'
+    user = db.query(User).filter_by(username=username).first()
+
+    delete(synchronize_session=False)
 
 
 def delete_light(id, api_key=None):
     """
     Delete a light
-    
+
     :param id: Light id to delete
     :type id: int
-    :param api_key: 
+    :param api_key:
     :type api_key: str
 
     :rtype: None
     """
-    return 'do some magic!'
+    user = db.query(Light).filter_by(id=id).first()
+
+    delete(synchronize_session=False)
 
 
 def get_alarm_by_id(id):
@@ -94,7 +131,9 @@ def get_alarm_by_id(id):
 
     :rtype: Apps
     """
-    return 'do some magic!'
+    alarm = db.query(Alarm).filter_by(id=id).first()
+
+    return jsonify(alarm)
 
 
 def get_all_alarms(id):
@@ -106,7 +145,9 @@ def get_all_alarms(id):
 
     :rtype: Apps
     """
-    return 'do some magic!'
+    alarm = db.query(Alarm)
+
+    return jsonify(alarm)
 
 
 def get_all_apps(id):
@@ -118,7 +159,9 @@ def get_all_apps(id):
 
     :rtype: Apps
     """
-    return 'do some magic!'
+    apps = db.query(Apps)
+
+    return jsonify(apps)
 
 
 def get_all_ligths(id):
@@ -130,7 +173,9 @@ def get_all_ligths(id):
 
     :rtype: Apps
     """
-    return 'do some magic!'
+    light = db.query(Light)
+
+    return jsonify(light)
 
 
 def get_authorized_users(id):
@@ -142,7 +187,9 @@ def get_authorized_users(id):
 
     :rtype: User
     """
-    return 'do some magic!'
+    user = db.query(User)
+
+    return jsonify(user)
 
 
 def get_light_by_id(id):
@@ -154,7 +201,9 @@ def get_light_by_id(id):
 
     :rtype: Apps
     """
-    return 'do some magic!'
+    light = db.query(Light).filter_by(id=id).first()
+
+    return jsonify(light)
 
 
 def get_weather(id):
@@ -166,7 +215,9 @@ def get_weather(id):
 
     :rtype: Apps
     """
-    return 'do some magic!'
+    weather = db.query(Weather)
+
+    return jsonify(weather)
 
 
 def update_alarm(id):
@@ -178,7 +229,9 @@ def update_alarm(id):
 
     :rtype: Apps
     """
-    return 'do some magic!'
+    alarm = db.query(Alarm).filter_by(id=id).first()
+
+    update(synchronize_session=False)
 
 
 def update_light(id):
@@ -190,4 +243,6 @@ def update_light(id):
 
     :rtype: Apps
     """
-    return 'do some magic!'
+    light = db.query(Light).filter_by(id=id).first()
+
+    update(synchronize_session=False)

@@ -50,8 +50,11 @@ def delete_user(username, api_key=None):
 
     :rtype: None
     """
-    return 'do some magic!'
 
+    user = db.query(User).filter_by(username=username).first()
+    db.delete(user)
+    db.commit()
+    return True
 
 def get_user_by_username(username):
     """
@@ -76,4 +79,23 @@ def update_user(username):
 
     :rtype: User
     """
-    return 'do some magic!'
+    user = db.query(User).filter_by(username=username).first()
+
+    params = connexion.request.get_json()
+
+    user.first_name = params['firstName']
+    user.last_name = params['lastName']
+    user.email = params['email']
+    user.password = params['password']
+    # user.update(
+    #     email=params['email'],
+    #     first_name=params['firstName'],
+    #     last_name=params['lastName'],
+    #     password=params['password'],
+    #     username=params['username'],
+    #     face=params['face']
+    # )
+
+    # db.update(user)
+    db.commit()
+    return jsonify(user)
