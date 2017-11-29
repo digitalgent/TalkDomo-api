@@ -34,6 +34,32 @@ def add_user(body=None):
 
     return jsonify(user)
 
+def add_user_with_domo(id, body=None):
+    """
+    Add a new user
+    Make a new account(username, name, face, password)
+    :param body: Add new account to access Domo
+    :type body: dict | bytes
+
+    :rtype: User
+    """
+    params = connexion.request.get_json()
+
+    user = User(
+        email=params['email'],
+        first_name=params['firstName'],
+        last_name=params['lastName'],
+        password=params['password'],
+        username=params['username'],
+        face=params['face'],
+        domo_id=id
+    )
+
+    db.add(user)
+    db.commit()
+
+    return jsonify(user)
+
     # if connexion.request.is_json:
     #     body = User.from_dict(connexion.request.get_json())
     # return 'do some magic... ?'

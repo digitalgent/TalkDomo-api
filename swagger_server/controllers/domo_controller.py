@@ -33,7 +33,7 @@ def get_all_users(id):
     domo = db.query(Domo).filter_by(id=id).first()
 
 
-    return jsonify(do)
+    return jsonify(domo.users)
 
 def get_domo_by_id(id):
     """
