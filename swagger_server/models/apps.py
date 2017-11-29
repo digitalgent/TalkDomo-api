@@ -16,10 +16,14 @@ from swagger_server.models.base import Base
 class Apps(Base):
     __tablename__ = 'apps'
 
-    # weather = Column(Weather)
-    # lights = Column(Light)
-    # alarms = Column(Alarm)
-    # security = Column(Boolean)
+    domo_id = Column(Integer, ForeignKey('domo.id'))
+    domo = relationship("Domo", backref=backref('domo', uselist=True, cascade='delete,all'))
+
+
+    # weather = Column(String(128))
+    # lights = Column(String(128))
+    # alarms = Column(String(128))
+    # security = Column(Integer)
 
 # class Apps(Model):
 #     """

@@ -87,7 +87,8 @@ def delete_alarm(id, api_key=None):
     """
     user = db.query(Alarm).filter_by(id=id).first()
 
-    delete(synchronize_session=False)
+    db.delete(alarm)
+    db.commit()
 
 
 def delete_authorized_user(username, api_key=None):
@@ -103,7 +104,8 @@ def delete_authorized_user(username, api_key=None):
     """
     user = db.query(User).filter_by(username=username).first()
 
-    delete(synchronize_session=False)
+    db.delete(user)
+    db.commit()
 
 
 def delete_light(id, api_key=None):
@@ -119,7 +121,8 @@ def delete_light(id, api_key=None):
     """
     user = db.query(Light).filter_by(id=id).first()
 
-    delete(synchronize_session=False)
+    db.delete(light)
+    db.commit()
 
 
 def get_alarm_by_id(id):
@@ -145,7 +148,7 @@ def get_all_alarms(id):
 
     :rtype: Apps
     """
-    alarm = db.query(Alarm)
+    alarm = db.query(Alarm).all()
 
     return jsonify(alarm)
 
@@ -159,7 +162,7 @@ def get_all_apps(id):
 
     :rtype: Apps
     """
-    apps = db.query(Apps)
+    apps = db.query(Apps).all()
 
     return jsonify(apps)
 
@@ -173,7 +176,7 @@ def get_all_ligths(id):
 
     :rtype: Apps
     """
-    light = db.query(Light)
+    light = db.query(Light).filter_by(id=id).all()
 
     return jsonify(light)
 
@@ -230,8 +233,14 @@ def update_alarm(id):
     :rtype: Apps
     """
     alarm = db.query(Alarm).filter_by(id=id).first()
+    params = connexion.request.get_json()
 
-    update(synchronize_session=False)
+    alarm.time = params["time"]
+    alarm.goodmorning = params["goodmorning"]
+
+    db.commit()
+    return jsonify(alarm)
+
 
 
 def update_light(id):
@@ -244,5 +253,10 @@ def update_light(id):
     :rtype: Apps
     """
     light = db.query(Light).filter_by(id=id).first()
+    params = connexion.request.get_json()
 
-    update(synchronize_session=False)
+    light.name = params ["name"]
+    light.status = params ["status"]
+
+    db.commit()
+    return jsonify(light)
