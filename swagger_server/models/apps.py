@@ -16,8 +16,8 @@ from swagger_server.models.base import Base
 class Apps(Base):
     __tablename__ = 'apps'
 
-    domo_id = Column(Integer, ForeignKey('domo.id'))
-    domo = relationship("Domo", backref=backref('domo', uselist=True, cascade='delete,all'))
+    # domo_id = Column(Integer, ForeignKey('domo.id'))
+    # domo = relationship("Domo", backref=backref('domo', uselist=True, cascade='delete,all'))
 
 
     # weather = Column(String(128))

@@ -20,7 +20,7 @@ class Domo(Base):
     emotion = Column(String(128))
 
     users = relationship("User")
-    apps = relationship("Apps")
+    # apps = relationship("Apps")
 
 
 # class Domo(Model):
