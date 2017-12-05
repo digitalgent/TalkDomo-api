@@ -18,7 +18,7 @@ pip3 install -r requirements.txt
 python3 -m swagger_server
 ```
 
-Set up your local environment settings by copying `.env.example` to `.env` and fill in the placeholders. 
+Set up your local environment settings by copying `.env.example` to `.env` and fill in the placeholders.
 
 and open your browser to here:
 
@@ -49,3 +49,6 @@ docker build -t swagger_server .
 # starting up a container
 docker run -p 8080:8080 swagger_server
 ```
+
+## Running nginx oldschool
+https://www.digitalocean.com/community/questions/flask-nginx-uwsgi-ubuntu-tutorial
