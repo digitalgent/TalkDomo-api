@@ -6,8 +6,8 @@ After=network.target
 User=root
 Group=www-data
 WorkingDirectory=/var/www/html/digitalgent
-Environment="PATH=/var/www/html/digitalgent/api/bin"
-ExecStart=/var/www/html/digitalgent/api/bin/uwsgi --ini api.ini
+Environment="PATH=/var/www/html/digitalgent/bin"
+ExecStart=/var/www/html/digitalgent/bin/uwsgi --ini api.ini
 
 [Install]
 WantedBy=multi-user.target
