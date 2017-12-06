@@ -29,7 +29,7 @@ def add_alarm(id):
     db.add(alarm)
     db.commit()
 
-    return jsonify(alarm)
+    return jsonify(alarm), 200, {'Access-Control-Allow-Origin': '*'}
 
 
 def add_authorized_user(username):
@@ -50,7 +50,7 @@ def add_authorized_user(username):
     db.add(user)
     db.commit()
 
-    return jsonify(user)
+    return jsonify(user), 200, {'Access-Control-Allow-Origin': '*'}
 
 
 def add_light(id):
@@ -71,7 +71,7 @@ def add_light(id):
     db.add(light)
     db.commit()
 
-    return jsonify(light)
+    return jsonify(light), 200, {'Access-Control-Allow-Origin': '*'}
 
 
 def delete_alarm(id, api_key=None):
@@ -136,7 +136,7 @@ def get_alarm_by_id(id):
     """
     alarm = db.query(Alarm).filter_by(id=id).first()
 
-    return jsonify(alarm)
+    return jsonify(alarm), 200, {'Access-Control-Allow-Origin': '*'}
 
 
 def get_all_alarms(id):
@@ -150,7 +150,7 @@ def get_all_alarms(id):
     """
     alarm = db.query(Alarm).all()
 
-    return jsonify(alarm)
+    return jsonify(alarm), 200, {'Access-Control-Allow-Origin': '*'}
 
 
 def get_all_apps(id):
@@ -164,7 +164,7 @@ def get_all_apps(id):
     """
     apps = db.query(Apps).all()
 
-    return jsonify(apps)
+    return jsonify(apps), 200, {'Access-Control-Allow-Origin': '*'}
 
 
 def get_all_ligths(id):
@@ -178,7 +178,7 @@ def get_all_ligths(id):
     """
     light = db.query(Light).filter_by(id=id).all()
 
-    return jsonify(light)
+    return jsonify(light), 200, {'Access-Control-Allow-Origin': '*'}
 
 
 def get_authorized_users(id):
@@ -192,7 +192,7 @@ def get_authorized_users(id):
     """
     user = db.query(User)
 
-    return jsonify(user)
+    return jsonify(user), 200, {'Access-Control-Allow-Origin': '*'}
 
 
 def get_light_by_id(id):
@@ -206,7 +206,7 @@ def get_light_by_id(id):
     """
     light = db.query(Light).filter_by(id=id).first()
 
-    return jsonify(light)
+    return jsonify(light), 200, {'Access-Control-Allow-Origin': '*'}
 
 
 def get_weather(id):
@@ -220,7 +220,7 @@ def get_weather(id):
     """
     weather = db.query(Weather)
 
-    return jsonify(weather)
+    return jsonify(weather), 200, {'Access-Control-Allow-Origin': '*'}
 
 
 def update_alarm(id):
@@ -239,7 +239,7 @@ def update_alarm(id):
     alarm.goodmorning = params["goodmorning"]
 
     db.commit()
-    return jsonify(alarm)
+    return jsonify(alarm), 200, {'Access-Control-Allow-Origin': '*'}
 
 
 
@@ -259,4 +259,4 @@ def update_light(id):
     light.status = params ["status"]
 
     db.commit()
-    return jsonify(light)
+    return jsonify(light), 200, {'Access-Control-Allow-Origin': '*'}

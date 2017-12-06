@@ -32,7 +32,7 @@ def add_user(body=None):
     db.add(user)
     db.commit()
 
-    return jsonify(user)
+    return jsonify(user), 200, {'Access-Control-Allow-Origin': '*'}
 
 def add_user_with_domo(id, body=None):
     """
@@ -58,7 +58,7 @@ def add_user_with_domo(id, body=None):
     db.add(user)
     db.commit()
 
-    return jsonify(user)
+    return jsonify(user), 200, {'Access-Control-Allow-Origin': '*'}
 
     # if connexion.request.is_json:
     #     body = User.from_dict(connexion.request.get_json())
@@ -93,7 +93,7 @@ def get_user_by_username(username):
     """
     user = db.query(User).filter_by(username=username).first()
 
-    return jsonify(user)
+    return jsonify(user), 200, {'Access-Control-Allow-Origin': '*'}
 
 
 def update_user(username):
@@ -124,4 +124,4 @@ def update_user(username):
 
     # db.update(user)
     db.commit()
-    return jsonify(user)
+    return jsonify(user), 200, {'Access-Control-Allow-Origin': '*'}

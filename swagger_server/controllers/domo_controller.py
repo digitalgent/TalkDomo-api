@@ -33,7 +33,7 @@ def get_all_users(id):
     domo = db.query(Domo).filter_by(id=id).first()
 
 
-    return jsonify(domo.users)
+    return jsonify(domo.users), 200, {'Access-Control-Allow-Origin': '*'}
 
 def get_domo_by_id(id):
     """
@@ -71,7 +71,7 @@ def add_domo(body=None):
     db.add(domo)
     db.commit()
 
-    return jsonify(domo)
+    return jsonify(domo), 200, {'Access-Control-Allow-Origin': '*'}
 
 def delete_domo(username, api_key=None):
     """
