@@ -46,7 +46,7 @@ def get_domo_by_id(id):
     """
     domo = db.query(Domo).filter_by(id=id).first()
 
-    return jsonify(domo)
+    return jsonify(domo), 200, {'Access-Control-Allow-Origin': '*'}
 
 def add_domo(body=None):
     """
