@@ -199,18 +199,6 @@ paths:
         405:
           description: "Invalid input"
       x-swagger-router-controller: "swagger_server.controllers.users_controller"
-    options:
-      tags:
-      - "users"
-      summary: "Add a new user, options"
-      description: "Make a new account(username, name, face, password)"
-      operationId: "options"
-      parameters:
-      - name: "id"
-      responses:
-        200:
-          description: "successful operation"
-      x-swagger-router-controller: "swagger_server.controllers.users_controller"
     get:
       tags:
       - "domo"
@@ -237,6 +225,22 @@ paths:
         404:
           description: "Users not found"
       x-swagger-router-controller: "swagger_server.controllers.domo_controller"
+    options:
+      tags:
+      - "users"
+      summary: "Add a new user, options"
+      operationId: "options"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID of Domo"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        200:
+          description: "successful operation"
+      x-swagger-router-controller: "swagger_server.controllers.users_controller"
   /domo/{id}/mic:
     post:
       tags:
