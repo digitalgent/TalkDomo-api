@@ -125,3 +125,7 @@ def update_user(username):
     # db.update(user)
     db.commit()
     return jsonify(user), 200, {'Access-Control-Allow-Origin': '*'}
+
+def options(id):
+
+    return True, 200, {'Access-Control-Allow-Origin': '*'}

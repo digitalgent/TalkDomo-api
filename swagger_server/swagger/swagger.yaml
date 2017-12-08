@@ -199,6 +199,18 @@ paths:
         405:
           description: "Invalid input"
       x-swagger-router-controller: "swagger_server.controllers.users_controller"
+    options:
+      tags:
+      - "users"
+      summary: "Add a new user, options"
+      description: "Make a new account(username, name, face, password)"
+      operationId: "options"
+      parameters:
+      - name: "id"
+      responses:
+        200:
+          description: "successful operation"
+      x-swagger-router-controller: "swagger_server.controllers.users_controller"
     get:
       tags:
       - "domo"
