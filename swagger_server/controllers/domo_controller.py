@@ -73,6 +73,34 @@ def add_domo(body=None):
 
     return jsonify(domo), 200, {'Access-Control-Allow-Origin': '*'}
 
+def update_domo(id):
+    """
+    Update an existing user
+    Edit an existing account
+    :param id: Domo that needs to be edited
+    :type id: int64
+
+    :rtype: Domo
+    """
+    domo = db.query(Domo).filter_by(id=id).first()
+
+    params = connexion.request.get_json()
+
+    domo.name = params['name']
+    domo.emotion = params['emotion']
+    # user.update(
+    #     email=params['email'],
+    #     first_name=params['firstName'],
+    #     last_name=params['lastName'],
+    #     password=params['password'],
+    #     username=params['username'],
+    #     face=params['face']
+    # )
+
+    # db.update(user)
+    db.commit()
+    return jsonify(domo), 200, {'Access-Control-Allow-Origin': '*'}
+
 def delete_domo(username, api_key=None):
     """
     Delete a domo

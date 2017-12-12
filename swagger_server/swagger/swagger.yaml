@@ -49,7 +49,6 @@ paths:
       description: "Returns a single username"
       operationId: "get_user_by_username"
       produces:
-      - "application/xml"
       - "application/json"
       parameters:
       - name: "username"
@@ -75,9 +74,7 @@ paths:
       operationId: "update_user"
       consumes:
       - "application/json"
-      - "application/xml"
       produces:
-      - "application/xml"
       - "application/json"
       parameters:
       - name: "username"
@@ -104,7 +101,6 @@ paths:
       description: "Deletes a user"
       operationId: "delete_user"
       produces:
-      - "application/xml"
       - "application/json"
       parameters:
       - name: "api_key"
@@ -152,7 +148,6 @@ paths:
       description: "Returns a single Domo"
       operationId: "get_domo_by_id"
       produces:
-      - "application/xml"
       - "application/json"
       parameters:
       - name: "id"
@@ -170,6 +165,35 @@ paths:
           description: "Invalid ID supplied"
         404:
           description: "Domo not found"
+      x-swagger-router-controller: "swagger_server.controllers.domo_controller"
+    put:
+      tags:
+      - "domo"
+      summary: "Update an existing domo"
+      description: "Edit an existing domo"
+      operationId: "update_domo"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "Domo that needs to be edited"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Domo"
+        400:
+          description: "Invalid domo id supplied"
+        404:
+          description: "Domo not found"
+        405:
+          description: "Validation exception"
       x-swagger-router-controller: "swagger_server.controllers.domo_controller"
   /domo/{id}/users:
     post:
@@ -206,7 +230,6 @@ paths:
       description: "Returns all users"
       operationId: "get_all_users"
       produces:
-      - "application/xml"
       - "application/json"
       parameters:
       - name: "id"
@@ -253,7 +276,6 @@ paths:
       description: "Returns all apps"
       operationId: "get_all_apps"
       produces:
-      - "application/xml"
       - "application/json"
       parameters:
       - name: "id"
@@ -280,7 +302,6 @@ paths:
       description: "weather forecast and advice for how to dress"
       operationId: "get_weather"
       produces:
-      - "application/xml"
       - "application/json"
       parameters:
       - name: "id"
@@ -307,7 +328,6 @@ paths:
       description: "Returns all lights"
       operationId: "get_all_ligths"
       produces:
-      - "application/xml"
       - "application/json"
       parameters:
       - name: "id"
@@ -355,7 +375,6 @@ paths:
       description: "Returns a single light"
       operationId: "get_light_by_id"
       produces:
-      - "application/xml"
       - "application/json"
       parameters:
       - name: "id"
@@ -382,9 +401,7 @@ paths:
       operationId: "update_light"
       consumes:
       - "application/json"
-      - "application/xml"
       produces:
-      - "application/xml"
       - "application/json"
       parameters:
       - name: "id"
@@ -412,7 +429,6 @@ paths:
       description: ""
       operationId: "delete_light"
       produces:
-      - "application/xml"
       - "application/json"
       parameters:
       - name: "api_key"
@@ -439,7 +455,6 @@ paths:
       description: "Returns all alarms"
       operationId: "get_all_alarms"
       produces:
-      - "application/xml"
       - "application/json"
       parameters:
       - name: "id"
@@ -487,7 +502,6 @@ paths:
       description: "Returns a single alarm"
       operationId: "get_alarm_by_id"
       produces:
-      - "application/xml"
       - "application/json"
       parameters:
       - name: "id"
@@ -514,9 +528,7 @@ paths:
       operationId: "update_alarm"
       consumes:
       - "application/json"
-      - "application/xml"
       produces:
-      - "application/xml"
       - "application/json"
       parameters:
       - name: "id"
@@ -544,7 +556,6 @@ paths:
       description: ""
       operationId: "delete_alarm"
       produces:
-      - "application/xml"
       - "application/json"
       parameters:
       - name: "api_key"
@@ -571,7 +582,6 @@ paths:
       description: "Returns all authorized users"
       operationId: "get_authorized_users"
       produces:
-      - "application/xml"
       - "application/json"
       parameters:
       - name: "id"
@@ -618,7 +628,6 @@ paths:
       description: ""
       operationId: "delete_authorized_user"
       produces:
-      - "application/xml"
       - "application/json"
       parameters:
       - name: "api_key"
