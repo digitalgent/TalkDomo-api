@@ -1,6 +1,6 @@
 import connexion
 from flask import jsonify
-from swagger_server.models.apps import Apps
+from swagger_server.models.app import App
 from swagger_server.models.user import User
 from datetime import date, datetime
 from typing import List, Dict
@@ -8,8 +8,62 @@ from six import iteritems
 from ..util import deserialize_date, deserialize_datetime
 
 from swagger_server.__init__ import db
-from swagger_server.models.apps import Apps
 
+
+def add_app_with_domo(id, body=None):
+    """
+    Add a new user
+    Make a new account(username, name, face, password)
+    :param body: Add new account to access Domo
+    :type body: dict | bytes
+
+    :rtype: User
+    """
+    params = connexion.request.get_json()
+
+    app = App(
+        name = params['name'],
+        apptype = params['apptype'],
+        status = params['status'],
+        domo_id = id
+    )
+
+    db.add(app)
+    db.commit()
+
+    return jsonify(app), 200, {'Access-Control-Allow-Origin': '*'}
+
+def get_app_by_id(id):
+    """
+    Find app by ID
+    Returns a single app
+    :param id: ID of App
+    :type id: int
+
+    :rtype: App
+    """
+    app = db.query(App).filter_by(id=id).first()
+
+    return jsonify(app), 200, {'Access-Control-Allow-Origin': '*'}
+
+def update_app(id):
+    """
+    Update an existing app
+    :param id: App that needs to be edited
+    :type id: int64
+
+    :rtype: App
+    """
+    app = db.query(App).filter_by(id=id).first()
+
+    params = connexion.request.get_json()
+
+    app.name = params['name']
+    app.apptype = params['apptype']
+    app.status = params['status']
+
+    db.commit()
+    return jsonify(app), 200, {'Access-Control-Allow-Origin': '*'}
 
 def add_alarm(id):
     """
@@ -18,7 +72,7 @@ def add_alarm(id):
     :param id: Add new Alarm
     :type id: int
 
-    :rtype: Apps
+    :rtype: App
     """
     params = connexion.request.get_json()
 
@@ -60,7 +114,7 @@ def add_light(id):
     :param id: Add new Light
     :type id: int
 
-    :rtype: Apps
+    :rtype: App
     """
     params = connexion.request.get_json()
 
@@ -132,7 +186,7 @@ def get_alarm_by_id(id):
     :param id: ID of Alarm
     :type id: int
 
-    :rtype: Apps
+    :rtype: App
     """
     alarm = db.query(Alarm).filter_by(id=id).first()
 
@@ -146,7 +200,7 @@ def get_all_alarms(id):
     :param id: ID of Domo
     :type id: int
 
-    :rtype: Apps
+    :rtype: App
     """
     alarm = db.query(Alarm).all()
 
@@ -160,9 +214,9 @@ def get_all_apps(id):
     :param id: ID of Domo
     :type id: int
 
-    :rtype: Apps
+    :rtype: App
     """
-    apps = db.query(Apps).all()
+    apps = db.query(App).all()
 
     return jsonify(apps), 200, {'Access-Control-Allow-Origin': '*'}
 
@@ -174,7 +228,7 @@ def get_all_ligths(id):
     :param id: ID of Light
     :type id: int
 
-    :rtype: Apps
+    :rtype: App
     """
     light = db.query(Light).filter_by(id=id).all()
 
@@ -202,7 +256,7 @@ def get_light_by_id(id):
     :param id: ID of Light
     :type id: int
 
-    :rtype: Apps
+    :rtype: App
     """
     light = db.query(Light).filter_by(id=id).first()
 
@@ -216,7 +270,7 @@ def get_weather(id):
     :param id: ID of App(weather)
     :type id: int
 
-    :rtype: Apps
+    :rtype: App
     """
     weather = db.query(Weather)
 
@@ -230,7 +284,7 @@ def update_alarm(id):
     :param id: Alarm that needs to be edited
     :type id: int
 
-    :rtype: Apps
+    :rtype: App
     """
     alarm = db.query(Alarm).filter_by(id=id).first()
     params = connexion.request.get_json()
@@ -250,7 +304,7 @@ def update_light(id):
     :param id: Light that needs to be edited
     :type id: int
 
-    :rtype: Apps
+    :rtype: App
     """
     light = db.query(Light).filter_by(id=id).first()
     params = connexion.request.get_json()

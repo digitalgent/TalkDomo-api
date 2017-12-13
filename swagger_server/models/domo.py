@@ -19,9 +19,8 @@ class Domo(Base):
     # voice = Column(String(128))
     emotion = Column(String(128))
 
-    users = relationship("User")
-    # apps = relationship("Apps")
-
+    users = relationship("User", backref="domo")
+    apps = relationship("App", backref="domo")
 
 # class Domo(Model):
 #     """

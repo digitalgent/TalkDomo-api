@@ -14,4 +14,4 @@ if __name__ == '__main__':
     # add CORS support
     CORS(app.app)
 
-    app.run(port=8080)
+    app.run(port=8090)

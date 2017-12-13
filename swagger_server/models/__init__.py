@@ -3,7 +3,7 @@
 from __future__ import absolute_import
 # import models into model package
 from .alarm import Alarm
-from .apps import Apps
+from .app import App
 from .base import Base
 from .domo import Domo
 from .light import Light

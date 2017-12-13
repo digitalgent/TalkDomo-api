@@ -15,7 +15,7 @@ tags:
 - name: "domo"
   description: "Operations about Domo"
 - name: "apps"
-  description: "Apps on Domo"
+  description: "App on Domo"
 schemes:
 - "http"
 paths:
@@ -288,174 +288,18 @@ paths:
         200:
           description: "successful operation"
           schema:
-            $ref: "#/definitions/Apps"
+            $ref: "#/definitions/App"
         400:
           description: "Invalid ID supplied"
         404:
           description: "Domo not found"
       x-swagger-router-controller: "swagger_server.controllers.apps_controller"
-  /apps/{id}/weather:
-    get:
-      tags:
-      - "apps"
-      summary: "Weather Forecast"
-      description: "weather forecast and advice for how to dress"
-      operationId: "get_weather"
-      produces:
-      - "application/json"
-      parameters:
-      - name: "id"
-        in: "path"
-        description: "ID of App(weather)"
-        required: true
-        type: "integer"
-        format: "int64"
-      responses:
-        200:
-          description: "successful operation"
-          schema:
-            $ref: "#/definitions/Apps"
-        400:
-          description: "Invalid ID supplied"
-        404:
-          description: "App not found"
-      x-swagger-router-controller: "swagger_server.controllers.apps_controller"
-  /apps/{id}/lights:
-    get:
-      tags:
-      - "apps"
-      summary: "Lights list"
-      description: "Returns all lights"
-      operationId: "get_all_ligths"
-      produces:
-      - "application/json"
-      parameters:
-      - name: "id"
-        in: "path"
-        description: "ID of Light"
-        required: true
-        type: "integer"
-        format: "int64"
-      responses:
-        200:
-          description: "successful operation"
-          schema:
-            $ref: "#/definitions/Apps"
-        400:
-          description: "Invalid ID supplied"
-        404:
-          description: "Light not found"
-      x-swagger-router-controller: "swagger_server.controllers.apps_controller"
     post:
       tags:
       - "apps"
-      summary: "Add a new light"
-      description: "Add a new light to be remote controlled"
-      operationId: "add_light"
-      parameters:
-      - name: "id"
-        in: "path"
-        description: "Add new Light"
-        required: true
-        type: "integer"
-        format: "int64"
-      responses:
-        200:
-          description: "successful operation"
-          schema:
-            $ref: "#/definitions/Apps"
-        405:
-          description: "Invalid input"
-      x-swagger-router-controller: "swagger_server.controllers.apps_controller"
-  /apps/lights/{id}:
-    get:
-      tags:
-      - "apps"
-      summary: "Find light by ID"
-      description: "Returns a single light"
-      operationId: "get_light_by_id"
-      produces:
-      - "application/json"
-      parameters:
-      - name: "id"
-        in: "path"
-        description: "ID of Light"
-        required: true
-        type: "integer"
-        format: "int64"
-      responses:
-        200:
-          description: "successful operation"
-          schema:
-            $ref: "#/definitions/Apps"
-        400:
-          description: "Invalid ID supplied"
-        404:
-          description: "Light not found"
-      x-swagger-router-controller: "swagger_server.controllers.apps_controller"
-    put:
-      tags:
-      - "apps"
-      summary: "Update an existing light"
-      description: "Edit an existing light"
-      operationId: "update_light"
-      consumes:
-      - "application/json"
-      produces:
-      - "application/json"
-      parameters:
-      - name: "id"
-        in: "path"
-        description: "Light that needs to be edited"
-        required: true
-        type: "integer"
-        format: "int64"
-      responses:
-        200:
-          description: "successful operation"
-          schema:
-            $ref: "#/definitions/Apps"
-        400:
-          description: "Invalid light id supplied"
-        404:
-          description: "Light not found"
-        405:
-          description: "Validation exception"
-      x-swagger-router-controller: "swagger_server.controllers.apps_controller"
-    delete:
-      tags:
-      - "apps"
-      summary: "Delete a light"
-      description: ""
-      operationId: "delete_light"
-      produces:
-      - "application/json"
-      parameters:
-      - name: "api_key"
-        in: "header"
-        required: false
-        type: "string"
-      - name: "id"
-        in: "path"
-        description: "Light id to delete"
-        required: true
-        type: "integer"
-        format: "int64"
-      responses:
-        400:
-          description: "Invalid ID supplied"
-        404:
-          description: "Light not found"
-      x-swagger-router-controller: "swagger_server.controllers.apps_controller"
-  /apps/{id}/alarms:
-    get:
-      tags:
-      - "apps"
-      summary: "Alarms list"
-      description: "Returns all alarms"
-      operationId: "get_all_alarms"
-      produces:
-      - "application/json"
+      summary: "Add a new ap"
+      description: "Make a new app"
+      operationId: "add_app_with_domo"
       parameters:
       - name: "id"
         in: "path"
@@ -463,26 +307,33 @@ paths:
         required: true
         type: "integer"
         format: "int64"
+      - in: "body"
+        name: "body"
+        description: "Add new app to access Domo"
+        required: false
+        schema:
+          $ref: "#/definitions/User"
       responses:
         200:
           description: "successful operation"
           schema:
-            $ref: "#/definitions/Apps"
-        400:
-          description: "Invalid ID supplied"
-        404:
-          description: "Alarm not found"
+            $ref: "#/definitions/App"
+        405:
+          description: "Invalid input"
       x-swagger-router-controller: "swagger_server.controllers.apps_controller"
-    post:
+  /apps/{id}:
+    get:
       tags:
       - "apps"
-      summary: "Add a new Alarm"
-      description: "Add a new alarm"
-      operationId: "add_alarm"
+      summary: "Find app by ID"
+      description: "Returns a single app"
+      operationId: "get_app_by_id"
+      produces:
+      - "application/json"
       parameters:
       - name: "id"
         in: "path"
-        description: "Add new Alarm"
+        description: "ID of App"
         required: true
         type: "integer"
         format: "int64"
@@ -490,9 +341,40 @@ paths:
         200:
           description: "successful operation"
           schema:
-            $ref: "#/definitions/Apps"
+            $ref: "#/definitions/App"
+        400:
+          description: "Invalid ID supplied"
+        404:
+          description: "App not found"
+      x-swagger-router-controller: "swagger_server.controllers.apps_controller"
+    put:
+      tags:
+      - "apps"
+      summary: "Update an existing app"
+      description: "Edit an existing app"
+      operationId: "update_app"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "App that needs to be edited"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/App"
+        400:
+          description: "Invalid app id supplied"
+        404:
+          description: "App not found"
         405:
-          description: "Invalid input"
+          description: "Validation exception"
       x-swagger-router-controller: "swagger_server.controllers.apps_controller"
   /apps/alarms/{id}:
     get:
@@ -514,7 +396,7 @@ paths:
         200:
           description: "successful operation"
           schema:
-            $ref: "#/definitions/Apps"
+            $ref: "#/definitions/App"
         400:
           description: "Invalid ID supplied"
         404:
@@ -541,7 +423,7 @@ paths:
         200:
           description: "successful operation"
           schema:
-            $ref: "#/definitions/Apps"
+            $ref: "#/definitions/App"
         400:
           description: "Invalid alarm id supplied"
         404:
@@ -663,18 +545,15 @@ definitions:
         $ref: "#/definitions/Voice"
       emotion:
         type: "string"
-  Apps:
+  App:
     type: "object"
     properties:
-      weather:
-        $ref: "#/definitions/Weather"
-      lights:
-        $ref: "#/definitions/Light"
-      alarms:
-        $ref: "#/definitions/Alarm"
-      security:
-        type: "boolean"
-        default: false
+      name:
+        type: "string"
+      apptype:
+        type: "string"
+      status:
+        type: "string"
   User:
     type: "object"
     properties:

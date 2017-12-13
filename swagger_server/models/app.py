@@ -1,9 +1,6 @@
 # coding: utf-8
 
 from __future__ import absolute_import
-from swagger_server.models.alarm import Alarm
-from swagger_server.models.light import Light
-from swagger_server.models.weather import Weather
 # from .base_model_ import Model
 from datetime import date, datetime
 from typing import List, Dict
@@ -13,12 +10,18 @@ from sqlalchemy import Table, Column, ForeignKey, String, Integer, Text
 from sqlalchemy.orm import relationship, backref
 from swagger_server.models.base import Base
 
-class Apps(Base):
+class App(Base):
     __tablename__ = 'apps'
 
     # domo_id = Column(Integer, ForeignKey('domo.id'))
     # domo = relationship("Domo", backref=backref('domo', uselist=True, cascade='delete,all'))
+    name = Column(String(128))
+    apptype = Column(String(128))
+    status = Column(String(128))
 
+    domo_id = Column(Integer, ForeignKey('domo.id'))
+    # domo = relationship("Domo", back_populates="apps")#backref=backref('domo', uselist=True, cascade='delete,all'))
+    # domo = relationship("Domo", backref=backref('domo', uselist=True, cascade='delete,all'))
 
     # weather = Column(String(128))
     # lights = Column(String(128))
